@@ -1,48 +1,55 @@
-import React from 'react';
 import Layout from '../Component/Layout';
+import { jsPDF } from 'jspdf';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 const PrintReceiptPage = () => {
-  // Dummy data for account info, ideally this should come from an API
-  const accountInfo = {
-    accountNo: '1234567890',
-    name: 'John Doe',
-    address: '123 Main Street, Springfield, USA',
-    accountType: 'Savings',
-    balance: 12345.67
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+  const handlePrintReceipt = async () => {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+
+    if (!userId || !token) {
+      setError('User is not logged in.');
+      return;
+    }
+    try {
+      const receiptResponse = await axios.post('http://localhost:8080/atm/accounts/currBalReceipt', null, {
+        params: {
+          userId,
+          token
+        }
+      });
+        // Generate PDF receipt
+        if (receiptResponse.status === 200) {
+          const receiptData = receiptResponse.data;
+          generatePdfReceipt(receiptData);
+        }
+      
+    } catch (error) {
+      //setError('Failed to update pin. Please try again.');
+      console.error('Failed to fetch details', error);
+    }
+  }
+
+  const generatePdfReceipt = (data) => {
+    const doc = new jsPDF();
+ 
+    doc.text('Transaction Receipt', 10, 10);
+    doc.text(`Account Number: ${data.accountNumber}`, 10, 20);
+    doc.text(`Date & Time: ${data.dateTime}`, 10, 30);
+    doc.text(`Available Balance: ₹${data.availableBalance}`, 10, 40);
+ 
+    doc.save('receipt.pdf');
   };
+  handlePrintReceipt();
+}, []);
 
   return (
     <Layout>
-      <div className="container d-flex  justify-content-center">
-        <div className="card shadow" style={{ width: '500px', borderRadius: '15px' }}>
-          <div className="card-body">
-            <h3 className="card-title" style={{ color: '#FF7F50' }}>Account Information</h3>
-            <div className="mb-3">
-              <label className="form-label" style={{ fontWeight: 'bold' }}>Account No:</label>
-              <p>{accountInfo.accountNo}</p>
-            </div>
-            <div className="mb-3">
-              <label className="form-label" style={{ fontWeight: 'bold' }}>Name:</label>
-              <p>{accountInfo.name}</p>
-            </div>
-            <div className="mb-3">
-              <label className="form-label" style={{ fontWeight: 'bold' }}>Address:</label>
-              <p>{accountInfo.address}</p>
-            </div>
-            <div className="mb-3">
-              <label className="form-label" style={{ fontWeight: 'bold' }}>Account Type:</label>
-              <p>{accountInfo.accountType}</p>
-            </div>
-            <div className="mb-3">
-              <label className="form-label" style={{ fontWeight: 'bold' }}>Balance:</label>
-              <p>${accountInfo.balance.toFixed(2)}</p>
-            </div>
-          </div>
-          <div className="card-footer" style={{ background: '#FF7F50', color: '#ffffff', borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px' }}>
-            <small>Updated: {new Date().toLocaleDateString()}</small>
-          </div>
-        </div>
-      </div>
+      
     </Layout>
   );
 };
