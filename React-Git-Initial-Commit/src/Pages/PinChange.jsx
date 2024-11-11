@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 import Layout from '../Component/Layout';
-import { useNavigate } from 'react-router-dom';
 
 const PinChangePage = () => {
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
+  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
   const handlePinChange = async () => {
     if (pin === confirmPin) {
-    const userId = localStorage.getItem('userId');
       try {
       const response = await axios.post('http://localhost:8080/atm/user/updatePin', null, {
         params: {
@@ -21,9 +20,13 @@ const PinChangePage = () => {
           newPin: pin
         }
       });
-      
-        toast.success(response.data);
-        navigate('/home');
+        if(response.status === 200) {
+          toast.info(response.data.message);
+          
+          setTimeout(() => {
+            navigate('/login');
+          }, 3000);
+        }
       
     } catch (error) {
       //setError('Failed to update pin. Please try again.');
