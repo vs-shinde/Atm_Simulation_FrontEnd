@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../Component/Layout';
@@ -7,6 +6,8 @@ import Layout from '../Component/Layout';
 const DepositPage = () => {
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
+  const [depositSuccess, setDepositSuccess] = useState(false);
+  const [depositedAmount, setDepositedAmount] = useState(0);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -14,6 +15,9 @@ const DepositPage = () => {
   };
 
   const handleDeposit = async (depositAmount) => {
+    setDepositedAmount(depositAmount);
+    setDepositSuccess(true);
+
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
 
@@ -30,15 +34,15 @@ const DepositPage = () => {
           amount: depositAmount
         }
       });
-      if (response.status === 200) {
-        toast.success(`${depositAmount} has been deposited!`);
-        setTimeout(() => {
-          navigate('/balance');
-        }, 3000);
+
+      if (response.status !== 200) {
+        setError('Failed to deposit amount. Please try again.');
+        setDepositSuccess(false); // Revert success if deposit fails
       }
     } catch (error) {
       setError('Failed to deposit amount. Please try again.');
       console.error('Error depositing amount:', error);
+      setDepositSuccess(false); // Revert success if deposit fails
     }
   };
 
@@ -47,10 +51,31 @@ const DepositPage = () => {
     handleDeposit(amount);
   };
 
+  const handlePrintReceipt = () => {
+    window.print();
+  };
+
+  if (depositSuccess) {
+    return (
+      <Layout>
+        <div className="container d-flex align-items-center justify-content-center">
+          <div className="card p-4 text-center shadow" style={{ width: '500px', borderRadius: '15px', marginTop: '50px' }}>
+            <div className="card-body">
+              <h3 className="card-title" style={{ color: '#FF7F50' }}>Deposit Successful</h3>
+              <p>{depositedAmount} has been deposited successfully!</p>
+              <button className="btn btn-primary m-2" onClick={() => navigate('/balance')}>Go to Balance</button>
+              <button className="btn btn-secondary m-2" onClick={handlePrintReceipt}>Print Receipt</button>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="container d-flex align-items-center justify-content-center">
-        <div className="card p-4 text-center shadow" style={{ width: '500px', borderRadius: '15px' }}>
+        <div className="card p-4 text-center shadow" style={{ width: '500px', borderRadius: '15px', marginTop: '50px' }}>
           <div className="card-body">
             <h3 className="card-title" style={{ color: '#FF7F50' }}>Deposit Amount</h3>
             {error && <div className="alert alert-danger">{error}</div>}
@@ -76,7 +101,6 @@ const DepositPage = () => {
             </div>
           </div>
         </div>
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover />
       </div>
     </Layout>
   );

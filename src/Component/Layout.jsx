@@ -11,7 +11,8 @@ const Layout = ({ children }) => {
   ];
   const LeftsidebarButtons = [
     { label: "Pin Change", link: "/pin-change" },
-    { label: "Print Receipt", link: "/print-receipt" }
+    { label: "Print Receipt", link: "/print-receipt" },
+    { label: "Logout", link: "/login" }
   ];
 
   return (
