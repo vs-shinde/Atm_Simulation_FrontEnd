@@ -1,0 +1,18 @@
+.formLabel {
+  margin-bottom: 3px !important;
+  /* color: #716e6e; */
+  margin-left: 1px;
+}
+.inputText{
+    min-height:2.4rem;
+    font-size:0.9rem ;
+    border-radius:3px;
+}
+
+.form-control{
+    &::placeholder {
+        color: #d3d3d3 !important;
+        opacity: 1;
+      }
+}
+
