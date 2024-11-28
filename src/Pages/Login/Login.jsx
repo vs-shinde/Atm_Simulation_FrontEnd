@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import hsbscLogo from "../../Assets/hsbcLogo.png";
+import creditCard from "../../Assets/credit-card1.jpg";
+
 
 
 const LoginComponent = () => {
@@ -34,8 +36,7 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex">
-     
+    <div className="container-fluid min-vh-100 d-flex">  
       <div>
         <img
           src={hsbscLogo}
@@ -52,7 +53,7 @@ const LoginComponent = () => {
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-center" style={{ backgroundColor: '#db0011', color: '#ffffff' }}>
           <h1 className='mt-5'>Welcome to Our Service</h1>
           <p>Your journey to easy banking starts here.</p>
-          <img src="../cards.png" alt="Welcome" className="img-fluid" style={{ maxWidth: '80%', borderRadius: '10px' }} />
+          <img src={creditCard} alt="Welcome" className="img-fluid" style={{ maxWidth: '80%', borderRadius: '10px' }} />
         </div>
         <div className="col-md-6 d-flex  justify-content-center">
           <div className="container" style={{ maxWidth: '400px',marginTop:"8%",marginBottom:"2%" }}>

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import hsbscLogo from "../../Assets/hsbcLogo.png";
 import "./styles.css";
+import creditCard from "../../Assets/credit-card1.jpg";
+
 
 const RegisterComponent = () => {
   const [formData, setFormData] = useState({
@@ -130,7 +132,7 @@ const RegisterComponent = () => {
           <h1>Welcome to Our Service</h1>
           <p>Join us to experience the best in class service.</p>
           <img
-            src="../home.webp"
+            src={creditCard}
             alt="Welcome"
             className="img-fluid"
             style={{ maxWidth: "80%", borderRadius: "10px" }}
