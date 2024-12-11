@@ -1,18 +1,58 @@
 .formLabel {
   margin-bottom: 3px !important;
-  /* color: #716e6e; */
   margin-left: 1px;
 }
-.inputText{
-    min-height:2.4rem;
-    font-size:0.9rem ;
-    border-radius:3px;
+.inputText {
+  min-height: 2.4rem;
+  font-size: 0.9rem;
+  border-radius: 3px;
+}
+.logo {
+  position: absolute;
+  right: 2rem;
+  top: 0.5rem;
+  height: 25px;
+  width: 36px;
+}
+.form-control {
+  &::placeholder {
+    color: #d3d3d3 !important;
+    opacity: 1;
+  }
 }
 
-.form-control{
-    &::placeholder {
-        color: #d3d3d3 !important;
-        opacity: 1;
-      }
+.modalWrapper {
+  position: fixed;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
-
+.loadingWrapper {
+  position: fixed;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column; /* To stack header and dots */
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+.modalContent {
+  min-width: 316px;
+  min-height: 156px;
+  text-align: center;
+}
