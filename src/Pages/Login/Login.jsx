@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import hsbscLogo from "../../Assets/hsbcLogo.png";
 import creditCard from "../../Assets/credit-card2.jpg";
+import LoadingDots from "../../Component/LoadingDots/LoadingDots";
 import "./styles.css";
 
 const LoginComponent = () => {
   const [accountNo, setAccountNo] = useState("");
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await axios.post(
@@ -28,10 +31,13 @@ const LoginComponent = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
         // Redirect to the home page
+
         navigate("/home");
       }
     } catch (error) {
       setError("Invalid account number or PIN");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,34 +56,28 @@ const LoginComponent = () => {
 
   return (
     <div className="container-fluid">
+      {isLoading && (
+        <div className="loadingWrapper">
+          <h4 style={{ marginBottom: "20px" }}>Loading ... </h4>
+          {<LoadingDots />}
+        </div>
+      )}
       <div>
         <img src={hsbscLogo} className="logo" />
       </div>
       <div className="row w-100">
-        <div
-          className="col-md-6 fixed-section d-flex flex-column align-items-center justify-content-center"
-          style={{ backgroundColor: "#db0011", color: "#ffffff" }}
-        >
-          <h1>Welcome to Our Services</h1>
-          <p>Your journey to easy banking starts here.</p>
-          <img
-            src={creditCard}
-            alt="Welcome"
-            className="img-fluid"
-            style={{ maxWidth: "70%", borderRadius: "16px" }}
-          />
+        <div className="col-md-6 fixed-section d-flex flex-column align-items-center justify-content-center">
+          <h1 className="heading">Welcome to Our Services</h1>
+          <p className="subHeading">
+            Your journey to easy banking starts here.
+          </p>
+          <img src={creditCard} alt="Welcome" className=" creditCardImg" />
         </div>
         <div className="col-md-6 scrollable-section d-flex  justify-content-center">
-          <div
-            className="container"
-            style={{ maxWidth: "400px", marginTop: "8%", marginBottom: "2%" }}
-          >
+          <div className="container" style={{ maxWidth: "400px" }}>
             <div className="card shadow">
               <div className="card-body">
-                <h3
-                  className="card-title text-center"
-                  style={{ color: "#db0011" }}
-                >
+                <h3 className="card-title text-center">
                   Login <hr style={{ color: "gray" }} />
                 </h3>
                 <form onSubmit={handleLogin}>
@@ -96,6 +96,7 @@ const LoginComponent = () => {
                       value={accountNo}
                       onChange={handleChange}
                       maxLength={12}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -110,28 +111,15 @@ const LoginComponent = () => {
                       value={pin}
                       maxLength={4}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                   {error && (
-                    <div
-                      className="alert alert-danger"
-                      style={{
-                        padding: "8px 16px",
-                        fontStyle: "italic",
-                        transition: "all 0.5s ease-out",
-                      }}
-                    >
-                      {error}
-                    </div>
+                    <div className="error alert alert-danger">{error}</div>
                   )}
                   <button
                     type="submit"
-                    className="btn btn-primary w-100"
-                    style={{
-                      backgroundColor: "#FF7F50",
-                      borderColor: "#FF7F50",
-                      marginTop: "0.5rem",
-                    }}
+                    className="submitButton btn btn-primary w-100"
                   >
                     Login
                   </button>
