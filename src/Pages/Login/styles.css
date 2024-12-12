@@ -1,3 +1,29 @@
+.container-fluid {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.fixed-section {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  /* width: 30%; */
+}
+.scrollable-section {
+  height: 100vh;
+  overflow-y: auto;
+  margin-left: 50%;
+  scrollbar-width: var(1px);
+  flex-grow: 1;
+  /* width: 30%; */
+}
+
+.scrollable-section::-webkit-scrollbar {
+  width: 1px;
+}
+
 .formLabel {
   margin-bottom: 3px !important;
   margin-left: 1px;

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import hsbscLogo from "../../Assets/hsbcLogo.png";
-import creditCard from "../../Assets/credit-card1.jpg";
+import creditCard from "../../Assets/credit-card2.jpg";
+import "./styles.css";
 
 const LoginComponent = () => {
   const [accountNo, setAccountNo] = useState("");
@@ -28,7 +29,6 @@ const LoginComponent = () => {
         localStorage.setItem("userId", response.data.userId);
         // Redirect to the home page
         navigate("/home");
-        
       }
     } catch (error) {
       setError("Invalid account number or PIN");
@@ -49,34 +49,25 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex">
+    <div className="container-fluid">
       <div>
-        <img
-          src={hsbscLogo}
-          style={{
-            position: "absolute",
-            right: "2rem",
-            top: "0.5rem",
-            height: "25px",
-            width: "36px",
-          }}
-        />
+        <img src={hsbscLogo} className="logo" />
       </div>
       <div className="row w-100">
         <div
-          className="col-md-6 d-flex flex-column align-items-center justify-content-center"
+          className="col-md-6 fixed-section d-flex flex-column align-items-center justify-content-center"
           style={{ backgroundColor: "#db0011", color: "#ffffff" }}
         >
-          <h1 className="mt-5">Welcome to Our Service</h1>
+          <h1>Welcome to Our Services</h1>
           <p>Your journey to easy banking starts here.</p>
           <img
             src={creditCard}
             alt="Welcome"
             className="img-fluid"
-            style={{ maxWidth: "80%", borderRadius: "10px" }}
+            style={{ maxWidth: "70%", borderRadius: "16px" }}
           />
         </div>
-        <div className="col-md-6 d-flex  justify-content-center">
+        <div className="col-md-6 scrollable-section d-flex  justify-content-center">
           <div
             className="container"
             style={{ maxWidth: "400px", marginTop: "8%", marginBottom: "2%" }}
@@ -95,7 +86,7 @@ const LoginComponent = () => {
                       htmlFor="accountNo"
                       className={`form-label formLabel`}
                     >
-                      Account number
+                      Account number *
                     </label>
                     <input
                       type="text"
@@ -109,7 +100,7 @@ const LoginComponent = () => {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="pin" className={`form-label formLabel`}>
-                      PIN
+                      PIN *
                     </label>
                     <input
                       type="password"
