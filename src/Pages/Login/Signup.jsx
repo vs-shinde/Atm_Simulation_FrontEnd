@@ -118,7 +118,7 @@ const RegisterComponent = () => {
     <div className="container-fluid">
       {(isPending || isLoading) && (
         <div className="loadingWrapper">
-          <h4 style={{ marginBottom: "20px" }}>loading </h4>
+          <h4 style={{ marginBottom: "20px" }}>Loading ... </h4>
           {<LoadingDots />}
         </div>
       )}
@@ -132,7 +132,10 @@ const RegisterComponent = () => {
               ></i>
               <h4 className="card-title ">Successfully registered !</h4>
               <div className="card-title">
-                <a href="/login">Click here</a> to Login
+                <a href="/login" style={{ color: "#FF7F50" }}>
+                  Click here
+                </a>{" "}
+                to Login
               </div>
             </div>
           </div>
@@ -142,30 +145,18 @@ const RegisterComponent = () => {
         <img src={hsbscLogo} className="logo" />
       </div>
       <div className="row w-100">
-        <div
-          className="col-md-6 fixed-section d-flex flex-column align-items-center justify-content-center"
-          style={{ backgroundColor: "#db0011", color: "#ffffff" }}
-        >
-          <h1>Welcome to Our Services</h1>
-          <p>Join us to experience the best in class service.</p>
-          <img
-            src={creditCard}
-            alt="Welcome"
-            className="img-fluid"
-            style={{ maxWidth: "70%", borderRadius: "16px" }}
-          />
+        <div className="col-md-6 fixed-section d-flex flex-column align-items-center justify-content-center">
+          <h1 className="heading">Welcome to Our Services</h1>
+          <p className="subHeading">
+            Join us to experience the best in class service.
+          </p>
+          <img src={creditCard} alt="Welcome" className=" creditCardImg" />
         </div>
         <div className="col-md-6 scrollable-section d-flex  justify-content-center">
-          <div
-            className="container"
-            style={{ maxWidth: "550px", marginTop: "8%", marginBottom: "2%" }}
-          >
+          <div className="container" style={{ maxWidth: "550px" }}>
             <div className="card shadow">
               <div className="card-body">
-                <h3
-                  className="card-title text-center"
-                  style={{ color: "#db0011", marginBottom: "20px" }}
-                >
+                <h3 className="card-title text-center">
                   Register <hr style={{ color: "gray" }} />
                 </h3>
                 <form onSubmit={handleSubmit}>
@@ -185,6 +176,7 @@ const RegisterComponent = () => {
                           placeholder="Enter name"
                           value={formData.name}
                           onChange={handleChange}
+                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -201,6 +193,7 @@ const RegisterComponent = () => {
                           placeholder="Enter address"
                           value={formData.address}
                           onChange={handleChange}
+                          required
                         />
                       </div>
 
@@ -220,6 +213,7 @@ const RegisterComponent = () => {
                           value={formData.contact}
                           onChange={handleChange}
                           maxLength={10}
+                          required
                         />
                       </div>
                     </div>
@@ -238,6 +232,7 @@ const RegisterComponent = () => {
                           placeholder="Enter email"
                           value={formData.email}
                           onChange={handleChange}
+                          required
                         />
                       </div>
 
@@ -253,27 +248,18 @@ const RegisterComponent = () => {
                           placeholder="Enter PIN"
                           value={formData.pin}
                           onChange={handleChange}
+                          required
                         />
                       </div>
                     </div>
                   </div>
 
                   {error && (
-                    <div
-                      className="alert alert-danger"
-                      style={{ padding: "8px 16px", fontStyle: "italic" }}
-                    >
-                      {error}
-                    </div>
+                    <div className="error alert alert-danger">{error}</div>
                   )}
                   <button
                     type="submit"
-                    className="btn btn-primary w-100"
-                    style={{
-                      backgroundColor: "#FF7F50",
-                      borderColor: "#FF7F50",
-                      marginTop: "0.8rem",
-                    }}
+                    className="submitButton btn btn-primary w-100"
                   >
                     Register
                   </button>
