@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import hsbscLogo from "../../Assets/hsbcLogo.png";
 import "./styles.css";
 import creditCard from "../../Assets/credit-card1.jpg";
-
+import LoadingDots from "../../Component/LoadingDots/LoadingDots";
 
 const RegisterComponent = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +15,9 @@ const RegisterComponent = () => {
     contact: "",
   });
   const [error, setError] = useState("");
-  // const [showSuccessPopup ,setSuccessPopup] = useState(false)
+  const [showSuccessPopup, setSuccessPopup] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const { name, email, address, pin, contact } = formData;
@@ -68,61 +70,76 @@ const RegisterComponent = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    const isDuplicate = await checkDuplicateContact(formData.contact);
-    if (isDuplicate) {
-      setError("User already present with this contact number.");
-      return;
-    }
-
+  const registerUser = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/atm/user/create",
         formData
       );
-      console.log("User registered:", response.data);
-      // setSuccessPopup(true);
-      // You can add more actions here, like redirecting the user to another page
+      if (response?.data) {
+        setIsLoading(false);
+        setSuccessPopup(true);
+      }
     } catch (error) {
+      setIsLoading(false);
       console.error("Error registering user:", error);
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+    setIsLoading(true);
+    startTransition(() => {
+      const delayCheck = async () => {
+        const duplicate = await checkDuplicateContact(formData?.contact);
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(duplicate), 3000);
+        });
+      };
+      delayCheck().then((duplicate) => {
+        if (duplicate) {
+          setIsLoading(false);
+          setError("User already present with this contact number.");
+          return;
+        } else {
+          registerUser();
+        }
+      });
+    });
+  };
+
   return (
     <div className="container-fluid min-vh-100 d-flex">
-      {/* {showSuccessPopup && (
-        <div
-          className="container"
-          style={{ maxWidth: "400px", marginTop: "8%", marginBottom: "2%" }}
-        >
-          <div className="card shadow">
+      {(isPending || isLoading) && (
+        <div className="loadingWrapper">
+          <h4 style={{ marginBottom: "20px" }}>loading </h4>
+          {<LoadingDots />}
+        </div>
+      )}
+      {showSuccessPopup && (
+        <div className="modalWrapper">
+          <div className={"card shadow modalContent"}>
             <div className="card-body">
-              <div className="card-title">Successfully completed signup</div>
+              <i
+                style={{ color: "limegreen", fontSize: "30px" }}
+                class="bi bi-check-circle-fill"
+              ></i>
+              <h4 className="card-title ">Successfully registered !</h4>
+              <div className="card-title">
+                <a href="/login">Click here</a> to Login
+              </div>
             </div>
           </div>
         </div>
-      )
-      } */}
+      )}
       <div>
-        <img
-          src={hsbscLogo}
-          style={{
-            position: "absolute",
-            right: "2rem",
-            top: "0.5rem",
-            height: "25px",
-            width: "36px",
-          }}
-        />
+        <img src={hsbscLogo} className="logo" />
       </div>
       <div className="row w-100">
         <div
