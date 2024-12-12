@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import hsbscLogo from "../../Assets/hsbcLogo.png";
 import "./styles.css";
-import creditCard from "../../Assets/credit-card1.jpg";
+import creditCard from "../../Assets/credit-card2.jpg";
 import LoadingDots from "../../Component/LoadingDots/LoadingDots";
 
 const RegisterComponent = () => {
@@ -115,7 +115,7 @@ const RegisterComponent = () => {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex">
+    <div className="container-fluid">
       {(isPending || isLoading) && (
         <div className="loadingWrapper">
           <h4 style={{ marginBottom: "20px" }}>loading </h4>
@@ -143,19 +143,19 @@ const RegisterComponent = () => {
       </div>
       <div className="row w-100">
         <div
-          className="col-md-6 d-flex flex-column align-items-center justify-content-center"
+          className="col-md-6 fixed-section d-flex flex-column align-items-center justify-content-center"
           style={{ backgroundColor: "#db0011", color: "#ffffff" }}
         >
-          <h1>Welcome to Our Service</h1>
+          <h1>Welcome to Our Services</h1>
           <p>Join us to experience the best in class service.</p>
           <img
             src={creditCard}
             alt="Welcome"
             className="img-fluid"
-            style={{ maxWidth: "80%", borderRadius: "10px" }}
+            style={{ maxWidth: "70%", borderRadius: "16px" }}
           />
         </div>
-        <div className="col-md-6 d-flex  justify-content-center">
+        <div className="col-md-6 scrollable-section d-flex  justify-content-center">
           <div
             className="container"
             style={{ maxWidth: "550px", marginTop: "8%", marginBottom: "2%" }}
@@ -176,7 +176,7 @@ const RegisterComponent = () => {
                           htmlFor="name"
                           className={`form-label formLabel`}
                         >
-                          Name
+                          Name *
                         </label>
                         <input
                           type="text"
@@ -192,7 +192,7 @@ const RegisterComponent = () => {
                           htmlFor="address"
                           className={`form-label formLabel`}
                         >
-                          Address
+                          Address *
                         </label>
                         <input
                           type="text"
@@ -209,7 +209,7 @@ const RegisterComponent = () => {
                           htmlFor="contact"
                           className={`form-label formLabel`}
                         >
-                          Contact No
+                          Contact No *
                         </label>
                         <input
                           type="tel"
@@ -229,7 +229,7 @@ const RegisterComponent = () => {
                           htmlFor="email"
                           className={`form-label formLabel`}
                         >
-                          Email
+                          Email *
                         </label>
                         <input
                           type="email"
@@ -243,7 +243,7 @@ const RegisterComponent = () => {
 
                       <div className="mb-3">
                         <label htmlFor="pin" className={`form-label formLabel`}>
-                          PIN
+                          PIN *
                         </label>
                         <input
                           type="password"
