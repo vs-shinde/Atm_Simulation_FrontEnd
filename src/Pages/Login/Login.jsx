@@ -13,9 +13,24 @@ const LoginComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  // const validateLogin = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:8080/atm/user/validate-login",
+  //       {
+  //         accountNumber: accountNo,
+  //         pin: pin,
+  //       }
+  //     );
+  //     console.log(response);
+  //   } catch (error) {}
+  // };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    // const data = validateLogin();
 
     try {
       const response = await axios.post(
@@ -31,7 +46,6 @@ const LoginComponent = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
         // Redirect to the home page
-
         navigate("/home");
       }
     } catch (error) {
