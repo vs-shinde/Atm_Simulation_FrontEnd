@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, createContext } from "react";
 import { useContext } from "react";
 import axios from "axios";
-const { createContext } = require("react");
 const AuthContext = createContext(null);
 const AuthProvider = ({children}) =>{
     const [userId,setUserId] = useState(sessionStorage.getItem('userId')||null);
