@@ -1,12 +1,21 @@
 import React from "react";
 import "../Styles/Sidebar.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 
 const SidebarComponent = ({ buttons }) => {
+  const {logoutAction} = useAuth();
   const navigate = useNavigate();
 
   const handleClick = (btnLink) => {
-    navigate(btnLink);
+    if(btnLink === '/logout'){
+      const status = logoutAction();
+      if(status===true){
+        navigate('/');
+      }
+    }else{
+      navigate(btnLink);
+    }
   };
 
   return (

@@ -3,8 +3,9 @@ import axios from 'axios';
 import { jsPDF } from 'jspdf';
 import Layout from '../Component/Layout';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../Context/AuthContext';
 const WithdrawalPage = () => {
+  const {token,userId} = useAuth();
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
   const [withdrawSuccess, setWithdrawSuccess] = useState(false);
@@ -19,9 +20,7 @@ const WithdrawalPage = () => {
     setWithdrawnAmount(withdrawAmount);
     setWithdrawSuccess(true);
 
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-
+  
     if (!userId || !token) {
       setError('User is not logged in.');
       return;

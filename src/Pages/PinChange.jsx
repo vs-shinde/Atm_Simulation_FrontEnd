@@ -4,11 +4,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import Layout from '../Component/Layout';
+import { useAuth } from '../Context/AuthContext';
 
 const PinChangePage = () => {
+  const {token,userId} = useAuth();
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
-  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
   const handlePinChange = async () => {

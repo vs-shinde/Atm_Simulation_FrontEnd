@@ -8,24 +8,37 @@ import DepositPage from './Pages/Deposite';
 import WithdrawalPage from './Pages/Withdrawal';
 import PrintReceiptPage from './Pages/PrintReceipt';
 import PinChangePage from './Pages/PinChange';
-
+import { useAuth } from './Context/AuthContext';
 function App() {
-  return (
-    <Router>
+  const {token} = useAuth();
+  if (!token || token === "" || token === 0){
+    return (
+      <Router>
       <div>
         <Routes>
-          <Route exact path="/" element={<LoginComponent/>} />
           <Route path="/login" element={<LoginComponent/>} />
           <Route path="/signup" element={<RegisterComponent/>} />
-          <Route path="/home" element={<Home/>} />
-          <Route path="/balance" element={<Balance/>} />
-          <Route path="/deposite" element={<DepositPage/>} />
-          <Route path="/withdrawal" element={<WithdrawalPage/>} />
-          <Route path="/print-receipt" element={<PrintReceiptPage/>} />
-          <Route path="/pin-change" element={<PinChangePage/>} />
+          <Route path="*" element={<LoginComponent/>} />
         </Routes>
       </div>
     </Router>
+    );
+  }
+  return (
+    <Router>
+            <div>
+              <Routes>
+                  <Route path="/home" element={<Home/>} />
+                  <Route path="/balance" element={<Balance/>} />
+                  <Route path="/deposite" element={<DepositPage/>} />
+                  <Route path="/withdrawal" element={<WithdrawalPage/>} />
+                  <Route path="/print-receipt" element={<PrintReceiptPage/>} />
+                  <Route path="/pin-change" element={<PinChangePage/>} />
+                  <Route path="*" element={<Home/>} />
+              </Routes>
+            </div>
+          </Router>
+    
   );
 }
 

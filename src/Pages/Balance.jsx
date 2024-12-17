@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Component/Layout";
 import axios from 'axios';
-
+import { useAuth } from "../Context/AuthContext";
 const Balance = () => {
+  const {token,userId} = useAuth();
   const [balance, setBalance] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const userId = localStorage.getItem('userId');
-        const token = localStorage.getItem('token');
-
         // Check if userId and token exist
         if (!userId || !token) {
           setError('User is not logged in.');

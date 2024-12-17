@@ -2,15 +2,14 @@ import Layout from '../Component/Layout';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-
+import { useAuth } from '../Context/AuthContext';
 const PrintReceiptPage = () => {
+  const {token,userId} = useAuth();
   const [error, setError] = useState('');
 
   useEffect(() => {
   const handlePrintReceipt = async () => {
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-
+    
     if (!userId || !token) {
       setError('User is not logged in.');
       return;

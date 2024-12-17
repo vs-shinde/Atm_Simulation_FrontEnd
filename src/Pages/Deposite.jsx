@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../Component/Layout';
+import { useAuth } from '../Context/AuthContext';
 
 const DepositPage = () => {
+  const {token,userId} = useAuth();
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
   const [depositSuccess, setDepositSuccess] = useState(false);
@@ -18,8 +20,6 @@ const DepositPage = () => {
     setDepositedAmount(depositAmount);
     setDepositSuccess(true);
 
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
 
     if (!userId || !token) {
       setError('User is not logged in.');

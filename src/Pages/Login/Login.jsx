@@ -5,8 +5,10 @@ import hsbscLogo from "../../Assets/hsbcLogo.png";
 import creditCard from "../../Assets/credit-card2.jpg";
 import LoadingDots from "../../Component/LoadingDots/LoadingDots";
 import "./styles.css";
+import { useAuth } from "../../Context/AuthContext";
 
 const LoginComponent = () => {
+  const {loginAction} = useAuth();
   const [accountNo, setAccountNo] = useState("");
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
@@ -29,24 +31,15 @@ const LoginComponent = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // const data = validateLogin();
-
     try {
-      const response = await axios.post(
-        "http://localhost:8080/atm/user/login",
-        {
-          accountNumber: accountNo,
-          pin: pin,
-        }
-      );
-
-      if (response?.data?.token) {
-        // Save the token and userId in local storage
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", response.data.userId);
-        // Redirect to the home page
-        navigate("/home");
+      const status = await loginAction({
+        accountNumber: accountNo,
+        pin: pin,
+      });
+      if(status === false){
+        setError("Invalid account number or PIN");
+      }else{
+        navigate("/");
       }
     } catch (error) {
       setError("Invalid account number or PIN");
