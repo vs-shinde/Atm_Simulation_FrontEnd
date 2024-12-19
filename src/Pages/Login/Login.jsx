@@ -1,6 +1,5 @@
 import React, { useState, useTransition } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import hsbscLogo from "../../Assets/hsbcLogo.png";
 import creditCard from "../../Assets/credit-card2.jpg";
 import LoadingDots from "../../Component/LoadingDots/LoadingDots";
@@ -15,18 +14,6 @@ const LoginComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // const validateLogin = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8080/atm/user/validate-login",
-  //       {
-  //         accountNumber: accountNo,
-  //         pin: pin,
-  //       }
-  //     );
-  //     console.log(response);
-  //   } catch (error) {}
-  // };
 
   const handleLogin = async (e) => {
     e.preventDefault();
