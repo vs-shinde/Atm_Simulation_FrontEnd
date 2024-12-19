@@ -19,17 +19,17 @@ const LoginComponent = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const status = await loginAction({
+      const response = await loginAction({
         accountNumber: accountNo,
         pin: pin,
       });
-      if(status === false){
-        setError("Invalid account number or PIN");
-      }else{
+      if(response.status === true){
         navigate("/");
+      }else{
+        setError(response.message);
       }
     } catch (error) {
-      setError("Invalid account number or PIN");
+      setError("Login: Something went wrong. Please try latter.");
     } finally {
       setIsLoading(false);
     }
