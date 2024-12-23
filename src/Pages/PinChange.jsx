@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { FaTimes } from "react-icons/fa";
 import Layout from '../Component/Layout';
 import { useAuth } from '../Context/AuthContext';
 
@@ -49,6 +49,7 @@ const PinChangePage = () => {
       <div className="container d-flex align-items-center justify-content-center mt-5">
         <div className="card p-4 text-center shadow" style={{ width: '400px', borderRadius: '15px' }}>
           <div className="card-body">
+          <FaTimes onClick={()=> navigate('/') } className="float-end" style={{color: 'red', fontSize: '16px' }}></FaTimes>
             <h3 className="card-title" style={{ color: '#FF7F50' }}>Change PIN</h3>
             <form onSubmit={handleFormSubmit}>
               <div className="mb-3">

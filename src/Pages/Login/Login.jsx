@@ -114,6 +114,7 @@ const LoginComponent = () => {
                   <button
                     type="submit"
                     className="submitButton btn btn-primary w-100"
+                    data-testId="btn-login"
                   >
                     Login
                   </button>

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Component/Layout";
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import { useAuth } from "../Context/AuthContext";
+import { FaTimes } from "react-icons/fa";
 const Balance = () => {
   const {token,userId} = useAuth();
   const [balance, setBalance] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -39,6 +42,7 @@ const Balance = () => {
       <div className="container d-flex align-items-center justify-content-center mt-5">
         <div className="card text-center shadow" style={{ width: '350px', borderRadius: '15px' }}>
           <div className="card-body">
+            <FaTimes onClick={()=> navigate('/') } className="float-end" style={{color: 'red', fontSize: '16px' }}></FaTimes>
             <h3 className="card-title" style={{ color: '#FF7F50' }}>Account Balance</h3>
             {error ? (
               <p className="card-text text-danger">{error}</p>

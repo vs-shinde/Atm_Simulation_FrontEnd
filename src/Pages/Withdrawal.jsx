@@ -4,6 +4,7 @@ import { jsPDF } from 'jspdf';
 import Layout from '../Component/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
+import { FaTimes } from "react-icons/fa";
 const WithdrawalPage = () => {
   const {token,userId} = useAuth();
   const [amount, setAmount] = useState('');
@@ -91,7 +92,7 @@ const WithdrawalPage = () => {
     return (
       <Layout>
         <div className="container d-flex align-items-center justify-content-center">
-          <div className="card p-4 text-center shadow" style={{ width: '500px', borderRadius: '15px', marginTop: '50px' }}>
+          <div className="card p-4 text-center shadow" style={{  borderRadius: '15px'}}>
             <div className="card-body">
               <h3 className="card-title" style={{ color: '#FF7F50' }}>Withdrawal Successful</h3>
               <p>₹{withdrawnAmount} has been withdrawn successfully!</p>
@@ -109,6 +110,7 @@ const WithdrawalPage = () => {
       <div className="container d-flex align-items-center justify-content-center">
         <div className="card p-4 text-center shadow" style={{ width: '500px', borderRadius: '15px', marginTop: '50px' }}>
           <div className="card-body">
+          <FaTimes onClick={()=> navigate('/') } className="float-end" style={{color: 'red', fontSize: '16px' }}></FaTimes>
             <h3 className="card-title" style={{ color: '#FF7F50' }}>Withdraw Amount</h3>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleFormSubmit}>
